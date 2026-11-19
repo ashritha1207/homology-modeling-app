@@ -60,3 +60,19 @@ if st.sidebar.button("Run Prediction Workflow"):
         "DOPE Score": "-14520.43",
         "Ramachandran Favored Regions": "96.4%"
     })
+import streamlit.components.v1 as components
+import py3Dmol
+
+# --- Add this inside your Section 3 results block ---
+st.subheader("4. Interactive 3D Protein Structure")
+
+# Extract the 4-letter PDB code (e.g., "1A9J" from "1A9J_A")
+pdb_id = "1A9J"  # Or dynamically use: best_template_id.split("_")[0]
+
+# Create the 3D viewer
+view = py3Dmol.view(query=f"pdb:{pdb_id}", width=700, height=500)
+view.setStyle({"cartoon": {"color": "spectrum"}})
+view.zoomTo()
+
+# Render it inside Streamlit
+components.html(view._make_html(), height=500, width=700)
